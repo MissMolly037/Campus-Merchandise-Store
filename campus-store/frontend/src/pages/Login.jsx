@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { FiMail, FiLock, FiEye, FiEyeOff } from 'react-icons/fi';
+import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
 import './Auth.css';
 
@@ -23,10 +24,12 @@ const Login = () => {
     setLoading(true);
     try {
       await login(form);
+      toast.success('Welcome back!');
       navigate(redirect, { replace: true });
     } catch (err) {
       const msg = err.response?.data?.detail || 'Invalid credentials. Please try again.';
       setError(msg);
+      toast.error(msg);
     } finally {
       setLoading(false);
     }

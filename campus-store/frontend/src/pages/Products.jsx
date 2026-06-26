@@ -5,8 +5,11 @@ import ProductCard from '../components/ProductCard';
 import SearchBar from '../components/SearchBar';
 import AnimatedLoadingSkeleton from '../components/ui/animated-loading-skeleton';
 import EmptyState from '../components/EmptyState';
+import Pagination from '../components/Pagination';
 import { productService } from '../services/api';
 import './Products.css';
+
+const PAGE_SIZE = 12; // keep in sync with backend page_size
 
 const SORT_OPTIONS = [
   { value: '-created_at', label: 'Newest First' },
@@ -64,6 +67,14 @@ const Products = () => {
     else p.delete(key);
     p.delete('page');
     setSearchParams(p);
+  };
+
+  const setPage = (pageNum) => {
+    const p = new URLSearchParams(searchParams);
+    if (pageNum === 1) p.delete('page');
+    else p.set('page', String(pageNum));
+    setSearchParams(p);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const clearFilters = () => setSearchParams({});
@@ -172,9 +183,17 @@ const Products = () => {
               actionTo="/products"
             />
           ) : (
-            <div className="products-grid-main">
-              {products.map((p) => <ProductCard key={p.id} product={p} />)}
-            </div>
+            <>
+              <div className="products-grid-main">
+                {products.map((p) => <ProductCard key={p.id} product={p} />)}
+              </div>
+              <Pagination
+                currentPage={page}
+                totalCount={totalCount}
+                pageSize={PAGE_SIZE}
+                onPageChange={setPage}
+              />
+            </>
           )}
         </div>
       </div>
