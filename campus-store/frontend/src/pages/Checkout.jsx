@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FiCheckCircle } from 'react-icons/fi';
+import toast from 'react-hot-toast';
 import OrderSummary from '../components/OrderSummary';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
@@ -40,10 +41,16 @@ const Checkout = () => {
       const { data } = await orderService.create(payload);
       setPlaced(data);
       clearCart();
+      toast.success('Order placed successfully!');
     } catch (err) {
       const data = err.response?.data || {};
-      if (data.error) setErrors({ general: data.error });
-      else setErrors(data);
+      if (data.error) {
+        setErrors({ general: data.error });
+        toast.error(data.error);
+      } else {
+        setErrors(data);
+        toast.error('Please fix the errors below');
+      }
     } finally {
       setLoading(false);
     }

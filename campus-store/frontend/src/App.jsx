@@ -14,6 +14,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Checkout from './pages/Checkout';
 import Profile from './pages/Profile';
+import NotFound from './pages/NotFound';
 import './App.css';
 
 const App = () => (
@@ -48,6 +49,7 @@ const App = () => (
             <Route path="/profile" element={
               <ProtectedRoute><Profile /></ProtectedRoute>
             } />
+            <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
       </CartProvider>

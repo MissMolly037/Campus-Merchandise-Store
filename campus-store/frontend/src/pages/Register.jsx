@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FiUser, FiMail, FiLock, FiEye, FiEyeOff, FiHash } from 'react-icons/fi';
+import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
 import './Auth.css';
 
@@ -29,6 +30,7 @@ const Register = () => {
     try {
       await register(form);
       setSuccess('Account created! Redirecting to login...');
+      toast.success('Account created successfully!');
       setTimeout(() => navigate('/login'), 1800);
     } catch (err) {
       const data = err.response?.data || {};
@@ -37,6 +39,7 @@ const Register = () => {
       } else {
         setErrors({ non_field_errors: 'Registration failed. Please try again.' });
       }
+      toast.error('Registration failed. Please check the form.');
     } finally {
       setLoading(false);
     }

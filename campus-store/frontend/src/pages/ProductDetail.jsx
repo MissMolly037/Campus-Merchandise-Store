@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { FiShoppingBag, FiArrowLeft, FiPackage, FiTag } from 'react-icons/fi';
+import toast from 'react-hot-toast';
 import QuantitySelector from '../components/QuantitySelector';
 import ProductCard from '../components/ProductCard';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -39,6 +40,7 @@ const ProductDetail = () => {
   const handleAddToCart = () => {
     addToCart(product, qty);
     setAdded(true);
+    toast.success(`Added ${qty} × ${product.name} to cart`);
     setTimeout(() => setAdded(false), 2000);
   };
 

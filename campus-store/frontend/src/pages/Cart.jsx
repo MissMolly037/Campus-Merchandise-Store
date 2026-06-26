@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { FiArrowLeft, FiTrash2 } from 'react-icons/fi';
+import toast from 'react-hot-toast';
 import CartItem from '../components/CartItem';
 import OrderSummary from '../components/OrderSummary';
 import EmptyState from '../components/EmptyState';
@@ -38,7 +39,7 @@ const Cart = () => {
         <div className="cart-page__items">
           <div className="cart-page__items-header">
             <h3>Your Items</h3>
-            <button className="cart-page__clear-btn" onClick={clearCart}>
+            <button className="cart-page__clear-btn" onClick={() => { clearCart(); toast.success('Cart cleared'); }}>
               <FiTrash2 size={14} /> Clear Cart
             </button>
           </div>
